@@ -35,4 +35,51 @@ public class HashTable {
             }
         }
     }
+
+    public int hashFunction(String word){
+        int hashVal = word.hashCode();
+        hashVal = hashVal % arraySize;
+        if (hashVal < 0){
+            hashVal += arraySize;
+        }
+        return hashVal; //ideal index position for insertion or search for
+    }
+
+    //return step size > 0
+    public int secondHashFunction(String word){
+        int hashVal = word.hashCode();
+        hashVal = hashVal % arraySize;
+        if (hashVal < 0){
+            hashVal += arraySize;
+        }
+        return 3 - hashVal % 3; //3 is used because it is a prime number smaller than the array size
+    }
+
+    public void insert(String word){
+        int hashVal = hashFunction(word);
+        int stepSize = secondHashFunction(word);
+
+        while (hashArray[hashVal] != null){
+            hashVal = hashVal + stepSize;
+            hashVal = hashVal % arraySize;
+        }
+
+        hashArray[hashVal] = word;
+        System.out.println("Inserted word: " + word);
+        size++;
+    }
+
+    public String findWord(String word){
+        int hashVal = hashFunction(word);
+        int stepSize = secondHashFunction(word);
+
+        while (hashArray[hashVal] != null){
+            if (hashArray[hashVal].equals(word)){
+                return hashArray[hashVal];
+            }
+            hashVal = hashVal + stepSize;
+            hashVal = hashVal % arraySize;
+        }
+        return hashArray[hashVal];
+    }
 }
