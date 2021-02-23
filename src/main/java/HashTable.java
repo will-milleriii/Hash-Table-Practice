@@ -82,4 +82,16 @@ public class HashTable {
         }
         return hashArray[hashVal];
     }
+
+    public void displayTable(){
+        System.out.println("Table: ");
+        for (int i = 0; i < arraySize; i++){
+            if (hashArray[i] != null){
+                System.out.print(hashArray[i] + " ");
+            } else {
+                System.out.print("** ");
+            }
+            System.out.println(" ");
+        }
+    }
 }
